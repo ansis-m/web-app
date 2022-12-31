@@ -15,4 +15,8 @@ export class TestService {
     console.log(message);
     return this.http.get<Response>("http://localhost:8081/test", {observe: 'body', responseType: 'json'});
   }
+
+  quit(serviceConnected: string) {
+    return this.http.get<Response>("http://localhost:8081/quit", {observe: 'body', responseType: 'json'});
+  }
 }

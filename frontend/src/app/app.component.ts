@@ -16,4 +16,8 @@ export class AppComponent {
     console.log("Button Pushed");
     this.testService.testConnection("Service Connected").subscribe(response => {console.log(response), this.title = response.status});
   }
+
+  quit() {
+    this.testService.quit("Service Connected").subscribe(response => {console.log("closing")});
+  }
 }
