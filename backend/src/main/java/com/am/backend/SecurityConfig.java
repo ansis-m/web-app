@@ -13,6 +13,8 @@ import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
 @EnableWebSecurity
 @AllArgsConstructor
 @Configuration
@@ -27,6 +29,22 @@ public class SecurityConfig {
                 .requestMatchers("/*").permitAll()
                 .requestMatchers("/**").permitAll();
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+
+//        //configuration.setAllowedOrigins(ImmutableList.of("https://www.yourdomain.com")); // www - obligatory
+//        configuration.setAllowedOrigins(List.of("*"));  //set access from all domains
+//        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+//        configuration.setAllowCredentials(true);
+//        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type", "*"));
+
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 
 }

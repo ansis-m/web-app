@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {TestService} from "../services/services/test.service";
+import {TService} from "../services/services/t.service";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import {TestService} from "../services/services/test.service";
 export class AppComponent {
   title = 'frontend';
 
-  constructor(private testService: TestService) {
+  constructor(private testService: TService) {
   }
 
   testConnection() {
