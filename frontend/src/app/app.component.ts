@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {TService} from "../services/services/t.service";
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import {TService} from "../services/services/t.service";
 })
 export class AppComponent {
   title = 'Running the script!!!';
+  backendUrl = environment.backendUrl
 
   constructor(private testService: TService) {
   }
