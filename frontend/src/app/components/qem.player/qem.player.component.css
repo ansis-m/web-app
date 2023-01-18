@@ -1,0 +1,8 @@
+.audio-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+}
