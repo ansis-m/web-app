@@ -16,4 +16,5 @@ nohup java -jar /home/ansis/backend-1.0.jar > log.txt &
 
 EOF
 
-echo "All done ..."
+printf "\n\nAll done ..."
+echo "http://quincyessentialmusic.com"
