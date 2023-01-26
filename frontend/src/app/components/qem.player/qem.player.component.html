@@ -1,4 +1,13 @@
-<h3 style="text-align:center">{{filename | StripExtensionPipe}}</h3>
-<audio controls class='audio-container'>
-  <source src="{{backendUrl}}/qem/{{filename | StripExtensionPipe}}/{{filename}}" type="audio/mp3">
+<h3 style="text-align:center">{{podcast?.fileName | StripExtensionPipe}}</h3>
+<audio #player controls class='audio-container' (timeupdate)="getCurrentTime($event)">
+  <source src="{{backendUrl}}/qem/{{podcast?.fileName | StripExtensionPipe}}/{{podcast?.fileName}}" type="audio/mp3">
 </audio>
+<button *ngIf="podcast?.showTrackList" (click)="toggle()" style="text-align:center">{{tracklist}}</button>
+<button (click)="setCurrentTime()">Skip</button>
+<div *ngIf="podcast?.showTrackList && this.showTracklist">
+  <div *ngFor="let line of podcast?.trackList">
+    <div [innerHTML]="line | boldSpan"> </div>
+  </div>
+</div>
+<p>Timing: {{time}}</p>
+

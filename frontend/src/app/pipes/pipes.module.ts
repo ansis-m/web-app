@@ -1,12 +1,13 @@
 import {NgModule} from "@angular/core";
 import {StripExtensionPipe} from "./strip.extension.pipe";
+import {BoldSpanPipe} from "./bold.span.pipe";
 
 @NgModule({
   declarations: [
-    StripExtensionPipe
+    StripExtensionPipe, BoldSpanPipe
   ],
   exports: [
-    StripExtensionPipe
+    StripExtensionPipe, BoldSpanPipe
   ]
 })
 export class PipesModule{

@@ -1,17 +1,12 @@
 <div>
 
-  <h2>{{title}}</h2>
-  <button (click)="testConnection()"> Send Get Request </button>
-  <button (click)="quit()"> Stop The App </button>
+  <h2 style="text-align:center">{{title}}</h2>
 
-  <img src="favicon.ico" alt="Girl in a jacket">
-
-  <audio controls>
-    <source src="{{backendUrl}}/qem/Blas.mp3" type="audio/mp3">
-  </audio>
-
-  <img src="{{backendUrl}}/bilde/ansis_bilde.jpg" alt="ansis">
-<!--  <img src="ansis.jpg" alt="ansis">-->
-
+  <div *ngFor="let podcast of podcasts">
+    <qem-player
+      [backendUrl]="backendUrl"
+      [podcast]="podcast">
+    </qem-player>
+  </div>
 
 </div>

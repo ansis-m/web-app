@@ -53,6 +53,7 @@
                   "with": "src/environments/environment.development.ts"
                 }],
               "buildOptimizer": false,
+              "aot": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,

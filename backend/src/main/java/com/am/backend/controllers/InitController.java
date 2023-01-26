@@ -1,16 +1,18 @@
 package com.am.backend.controllers;
 
+import com.am.backend.services.PodcastService;
+import com.am.backend.models.PodcastModel;
+import com.am.backend.utils.trackListParser.TrackListParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.io.File;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @CrossOrigin
-public class TestController {
+public class InitController {
 
     @Value("${hostname}")
     private String hostname;
@@ -18,28 +20,40 @@ public class TestController {
     @Value("${files}")
     private String files;
 
+    @Autowired
+    InitController(PodcastService podcastService){
+        this.podcastService = podcastService;
+    }
+    PodcastService podcastService;
+
     @GetMapping("/filenames")
-    public ArrayList<String> listOfFilenames(){
-        return filenames();
+    public ArrayList<PodcastModel> listOfFilenames(){
+        return TrackListParser.getFilenames(files);
     }
 
-    private boolean isAudio(File file) {
-        return file.isFile() &&
-                (file.getName().endsWith(".mp3") ||
-                        file.getName().endsWith(".m4a") ||
-                        file.getName().endsWith(".wma"));
+    @PostMapping("/timestamp/add/{title}")
+    public ArrayList<PodcastModel> addTimestamp(@PathVariable String title, @RequestBody Integer timestamp){
+        /*TODO: update the persistence and return the new model
+          Frontend does not update the model itself
+        */
+        return TrackListParser.getFilenames(files);
     }
 
-    private ArrayList<String> filenames() {
-        ArrayList<String> result = new ArrayList<>();
-        File folder = new File(files);
-        Arrays.stream(folder.listFiles()).forEach(subfolder -> {
-            if(subfolder.isDirectory()) {
-                Arrays.stream(subfolder.listFiles()).forEach(file -> {
-                    if (isAudio(file))
-                        result.add(file.getName());});
-            }
-        });
-        return result;
+    @PostMapping("/timestamp/remove/{title}")
+    public ArrayList<PodcastModel> removeTimestamp(@PathVariable String title, @RequestBody Integer timestamp){
+        /*TODO: update the persistence and return the new model
+          Frontend does not update the model itself
+        */
+        return TrackListParser.getFilenames(files);
+    }
+
+    @PostMapping("/save")
+    public void savePodcast(@RequestBody String filename){
+        podcastService.savePodcast(new PodcastModel(filename, true));
+    }
+
+    @GetMapping("/podcasts")
+    public List<Object> getPodcast(){
+        return podcastService.getPodcasts();
     }
 }

@@ -1,31 +1,29 @@
-import { Component } from '@angular/core';
-import {TService} from "../services/services/t.service";
+import {Component, OnInit} from '@angular/core';
+import {BackendService} from "./services/backend.service";
 import {environment} from "../environments/environment";
+import {Title} from "@angular/platform-browser";
+import {Podcast} from "./models/podcast";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'Running the script!!!';
-  backendUrl = environment.backendUrl
+export class AppComponent implements OnInit{
+  title: string = 'QuincyEssentialMusic';
+  backendUrl: string = environment.backendUrl
+  podcasts: Podcast[] = [];
 
-  constructor(private testService: TService) {
+  constructor(private backendService: BackendService,
+              private titleService: Title) {
+    titleService.setTitle("QuincyEssentialMusic");
   }
 
-  testConnection() {
-    console.log("Button Pushed");
-    this.testService.testConnection("Service Connected").subscribe(
-      response => {
-            console.log(response);
-            this.title = response.status;
-            setTimeout(() => this.title = 'Running the script!!!', 500);
-          });
+  ngOnInit(): void {
+    this.backendService.getFilenames().subscribe((result: Podcast[]) => {
+      this.podcasts = result;
+      this.podcasts.forEach(p => console.log(p.fileName))
+    });
 
-  }
-
-  quit() {
-    this.testService.quit("Service Connected").subscribe(response => {console.log("closing")});
   }
 }

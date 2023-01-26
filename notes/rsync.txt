@@ -1,0 +1,5 @@
+rsync komanda no ubuntu wsl
+
+rsync -av -e ssh /mnt/c/Users/Ansis/IdeaProjects/quincyessentialmusic root@45.93.139.93:/home/ansis
+
+--delete option if some files are removed from the source

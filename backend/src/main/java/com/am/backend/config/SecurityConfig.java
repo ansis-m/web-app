@@ -1,4 +1,4 @@
-package com.am.backend;
+package com.am.backend.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -9,11 +9,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.reactive.config.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 @EnableWebSecurity
 @AllArgsConstructor
@@ -28,6 +23,8 @@ public class SecurityConfig {
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/*").permitAll()
                 .requestMatchers("/**").permitAll();
+
+        http.csrf().disable();
         return http.build();
     }
 
@@ -45,6 +42,10 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
     }
 
 }
