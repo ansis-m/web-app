@@ -2,12 +2,10 @@ package com.am.backend.controllers;
 
 import com.am.backend.models.Podcast;
 import com.am.backend.services.PodcastRedisService;
-import com.am.backend.utils.trackListParser.TrackListParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,8 +22,9 @@ public class InitController {
     PodcastRedisService podcastRedisService;
 
     @GetMapping("/filenames")
-    public ArrayList<Podcast> listOfFilenames(){
-        return TrackListParser.getFilenames();//TODO refraktorēt, lai atgriež PodcastRedisService
+    public List<Podcast> listOfFilenames(){
+        System.out.println("Yes!!!!");
+        return podcastRedisService.getPodcasts();//TODO refraktorēt, lai atgriež PodcastRedisService
     }
 
     @PostMapping("/timestamp/add/{title}")
@@ -48,7 +47,7 @@ public class InitController {
     }
 
     @GetMapping("/podcasts")
-    public List<Object> getPodcast(){
+    public List<Podcast> getPodcast(){
         return podcastRedisService.getPodcasts();
     }
 

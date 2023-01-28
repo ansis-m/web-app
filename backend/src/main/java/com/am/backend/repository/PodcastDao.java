@@ -2,10 +2,12 @@ package com.am.backend.repository;
 
 import com.am.backend.models.Podcast;
 
-import java.util.List;
+import java.util.LinkedList;
 
 public interface PodcastDao {
     void savePodcast(Podcast podcast);
 
-    List<Object> getPodcasts();
+    LinkedList<Podcast> getPodcasts();
+
+    Podcast getPodcast(String fileName);
 }

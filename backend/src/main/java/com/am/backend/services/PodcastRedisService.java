@@ -2,11 +2,12 @@ package com.am.backend.services;
 
 import com.am.backend.models.Podcast;
 
-import java.util.List;
+import java.util.LinkedList;
 
 public interface PodcastRedisService {
 
     void savePodcast(Podcast podcast);
-    List<Object> getPodcasts();
+    LinkedList<Podcast> getPodcasts();
 
+    Podcast getPodcast(String fileName);
 }

@@ -5,7 +5,7 @@ import com.am.backend.repository.PodcastDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.LinkedList;
 
 @Service
 public class PodcastRedisServiceImp implements PodcastRedisService {
@@ -20,7 +20,12 @@ public class PodcastRedisServiceImp implements PodcastRedisService {
     }
 
     @Override
-    public List<Object> getPodcasts() {
+    public LinkedList<Podcast> getPodcasts() {
         return podcastDao.getPodcasts();
+    }
+
+    @Override
+    public Podcast getPodcast(String fileName) {
+        return podcastDao.getPodcast(fileName);
     }
 }

@@ -14,11 +14,6 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
-//ToDo Upadate Parsing
-//ToDo clear Redis
-//ToDo Sync with Redis
-
 @Component
 public class TrackListParser {
 
@@ -32,13 +27,6 @@ public class TrackListParser {
         TrackListParser.podcastRedisService = podcastRedisService;
         initPodcasts();
     }
-
-    public static ArrayList<Podcast> fileNames = new ArrayList<>(); //ToDo get rid when sync with redis
-
-    public static ArrayList<Podcast> getFilenames() { //ToDo get rid when sync with redis
-        return fileNames;
-    }
-
     public static void initPodcasts(){
         File folder = new File(files);
         Arrays.stream(Objects.requireNonNull(folder.listFiles())).forEach(subfolder -> {
@@ -60,10 +48,19 @@ public class TrackListParser {
                     }
                 });
                 if (add.get()) {
-                    fileNames.add(podcast);//TODO sync with redis
+                    syncWithRedis(podcast);
                 }
             }
         });
+    }
+
+    private static void syncWithRedis(Podcast podcast) {
+        Podcast redisPodcast = podcastRedisService.getPodcast(podcast.getFileName());
+        if (redisPodcast == null) {
+            podcastRedisService.savePodcast(podcast);
+        } else {
+            System.out.println("podcast found: " + podcast.getFileName() + "\n\n");
+        }
     }
 
     private static LinkedList<Track> parseFile(File file) throws FileNotFoundException {
@@ -83,8 +80,6 @@ public class TrackListParser {
         if (i == -1){
             return new Track(string);
         } else {
-            System.out.println(string.substring(0, i));
-            System.out.println(string.substring(i) + "\n\n\n");
             return new Track(string.substring(0, i), string.substring(i));
         }
     }
