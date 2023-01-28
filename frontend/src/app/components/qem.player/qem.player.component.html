@@ -5,10 +5,10 @@
 <div *ngIf="!player.paused">Current track {{getCurrentTrack()}}</div>
 <button *ngIf="podcast?.showTrackList" (click)="toggle()" style="text-align:center">{{tracklist}}</button>
 <div *ngIf="podcast?.showTrackList && this.showTracklist">
-  <div *ngFor="let song of podcast?.trackList">
+  <div *ngFor="let song of podcast?.trackList; let i = index">
     <button class="astext" *ngIf="song.timestamp != -1; else text" (click)="jump(song.timestamp)"> <b>{{song.title}}</b>{{song.info + " "}} Timestamp:{{" "}}{{song.timestamp | timestampPipe}}</button>
-    <button *ngIf="song.timestamp != -1" (click)="removeTimestamp(song)">Remove Timestamp</button>
-    <ng-template #text><b>{{song.title}}</b>{{song.info}}<button (click)="addTimestamp(song)">Add Timestamp</button></ng-template>
+    <button *ngIf="song.timestamp != -1 && i != 0" (click)="removeTimestamp(song)">Remove Timestamp</button>
+    <ng-template #text><b>{{song.title}}</b>{{song.info}}<button *ngIf="i!=0" (click)="addTimeStamp(song)">Add Timestamp</button></ng-template>
 
   </div>
 </div>

@@ -28,4 +28,14 @@ public class PodcastRedisServiceImp implements PodcastRedisService {
     public Podcast getPodcast(String fileName) {
         return podcastDao.getPodcast(fileName);
     }
+
+    @Override
+    public int addTimeStamp(String fileName, String trackTitle, int timestamp) {
+        return podcastDao.addTimeStamp(fileName, trackTitle, timestamp);
+    }
+
+    @Override
+    public int removeTimeStamp(String fileName, String trackTitle) {
+        return podcastDao.removeTimeStamp(fileName, trackTitle);
+    }
 }

@@ -10,4 +10,8 @@ public interface PodcastDao {
     LinkedList<Podcast> getPodcasts();
 
     Podcast getPodcast(String fileName);
+
+    int addTimeStamp(String fileName, String trackTitle, int timestamp);
+
+    int removeTimeStamp(String fileName, String trackTitle);
 }

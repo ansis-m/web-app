@@ -48,6 +48,8 @@ public class TrackListParser {
                     }
                 });
                 if (add.get()) {
+                    if(podcast.getShowTrackList() && podcast.getTrackList().size() > 0)
+                        podcast.getTrackList().get(0).setTimestamp(0);
                     syncWithRedis(podcast);
                 }
             }

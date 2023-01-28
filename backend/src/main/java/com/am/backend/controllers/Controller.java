@@ -10,35 +10,30 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-public class InitController {
+public class Controller {
 
     @Value("${hostname}")
     private String hostname;
 
     @Autowired
-    InitController(PodcastRedisService podcastRedisService){
+    Controller(PodcastRedisService podcastRedisService){
         this.podcastRedisService = podcastRedisService;
     }
     PodcastRedisService podcastRedisService;
 
     @GetMapping("/filenames")
     public List<Podcast> listOfFilenames(){
-        System.out.println("Yes!!!!");
-        return podcastRedisService.getPodcasts();//TODO refraktorēt, lai atgriež PodcastRedisService
+        return podcastRedisService.getPodcasts();
     }
 
-    @PostMapping("/timestamp/add/{title}")
-    public void addTimestamp(@PathVariable String title, @RequestBody Integer timestamp){
-        /*TODO: update the persistence and return the new model
-          Frontend does not update the model itself
-        */
+    @PostMapping("/timestamp/add/{fileName}/{trackTitle}")
+    public int addTimestamp(@PathVariable String fileName, @PathVariable String trackTitle, @RequestBody Integer timestamp){
+        return podcastRedisService.addTimeStamp(fileName, trackTitle, timestamp);
     }
 
-    @PostMapping("/timestamp/remove/{title}")
-    public void removeTimestamp(@PathVariable String title, @RequestBody Integer timestamp){
-        /*TODO: update the persistence and return the new model
-          Frontend does not update the model itself
-        */
+    @PostMapping("/timestamp/remove/{fileName}/{trackTitle}")
+    public int removeTimestamp(@PathVariable String fileName, @PathVariable String trackTitle ){
+        return podcastRedisService.removeTimeStamp(fileName, trackTitle);
     }
 
     @PostMapping("/save")

@@ -15,4 +15,9 @@ export class BackendService {
   getFilenames() {
     return this.http.get<Podcast[]>(this.BACKEND_URL  + "/filenames", {observe: 'body', responseType: 'json'});
   }
+
+    addTimeStamp(fileName: string, trackTitle: string, timestamp: number) {
+      return this.http.post<number>(this.BACKEND_URL  + "/timestamp/add/" + fileName + "/" + trackTitle, timestamp, {observe: 'body', responseType: 'json'});
+
+    }
 }

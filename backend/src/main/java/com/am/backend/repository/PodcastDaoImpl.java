@@ -11,7 +11,6 @@ import java.util.LinkedList;
 @Repository
 public class PodcastDaoImpl implements PodcastDao{
 
-
     private final RedisTemplate<String, Podcast> redisTemplate;
     @Autowired
     PodcastDaoImpl(RedisTemplate<String, Podcast> redisTemplate){
@@ -41,5 +40,42 @@ public class PodcastDaoImpl implements PodcastDao{
     public Podcast getPodcast(String fileName) {
         ObjectMapper om = new ObjectMapper();
         return om.convertValue(redisTemplate.opsForHash().get(KEY, fileName), Podcast.class);
+    }
+
+    @Override
+    public int addTimeStamp(String fileName, String trackTitle, int timestamp) {
+        System.out.println("Setting timestamp. Filename: " + fileName + " trackTitle: " + trackTitle + " timestamp: " + timestamp);
+
+        try {
+            ObjectMapper om = new ObjectMapper();
+            Podcast podcast = om.convertValue(redisTemplate.opsForHash().get(KEY, fileName), Podcast.class);
+            podcast.getTrackList().forEach(track -> {   System.out.println(track.getTitle());
+                                                        if (track.getTitle().trim().equals(trackTitle.trim())) {
+                                                        System.out.println("Match!!\n\n");
+                                                        track.setTimestamp(timestamp);
+                                                        }
+                                                    });
+            redisTemplate.opsForHash().put(KEY, fileName, podcast);
+            return 1;
+        } catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    @Override
+    public int removeTimeStamp(String fileName, String trackTitle) {
+        try {
+            ObjectMapper om = new ObjectMapper();
+            Podcast podcast = om.convertValue(redisTemplate.opsForHash().get(KEY, fileName), Podcast.class);
+            podcast.getTrackList().forEach(track -> {if(track.getTitle().equals(trackTitle))
+                track.setTimestamp(-1);
+            });
+            redisTemplate.opsForHash().put(KEY, fileName, podcast);
+            return 1;
+        } catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
     }
 }

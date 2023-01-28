@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Podcast} from "../../models/podcast";
 import {Track} from "../../models/track";
+import {BackendService} from "../../services/backend.service";
 
 @Component({
   selector: 'qem-player',
@@ -8,17 +9,14 @@ import {Track} from "../../models/track";
   styleUrls: ['./qem.player.component.css']
 })
 export class QemPlayerComponent implements OnInit{
-  @Input()
-  podcast: Podcast = new Podcast();
-  @Input()
-  backendUrl: string = "";
-
+  @Input() podcast: Podcast = new Podcast();
+  @Input() backendUrl: string = "";
   @ViewChild('player') player: ElementRef | undefined;
   showTracklist: boolean = false;
   tracklist: string = "tracklist";
   time: number = 0;
 
-
+  constructor(private backendService: BackendService) {}
   ngOnInit(): void {
   }
 
@@ -36,10 +34,11 @@ export class QemPlayerComponent implements OnInit{
     this.player.nativeElement.currentTime = timestamp;
   }
 
-  addTimestamp(song: Track): void {
+  addTimeStamp(song: Track): void {
     //@ts-ignore
     song.timestamp = this.player.nativeElement.currentTime;
-    console.log("Implement: send timestamp to Redis");
+    this.backendService.addTimeStamp(this.podcast.fileName, song.title, song.timestamp)
+        .subscribe(response => console.log("Add Timestamp response: " + response));
   }
 
   removeTimestamp(song: Track) {
