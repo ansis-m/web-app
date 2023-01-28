@@ -1,12 +1,12 @@
 package com.am.backend.services;
 
-import com.am.backend.models.PodcastModel;
+import com.am.backend.models.Podcast;
 
 import java.util.List;
 
 public interface PodcastService {
 
-    void savePodcast(PodcastModel podcast);
+    void savePodcast(Podcast podcast);
     List<Object> getPodcasts();
 
 }

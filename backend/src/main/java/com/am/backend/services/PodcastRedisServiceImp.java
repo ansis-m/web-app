@@ -1,6 +1,6 @@
 package com.am.backend.services;
 
-import com.am.backend.models.PodcastModel;
+import com.am.backend.models.Podcast;
 import com.am.backend.repository.PodcastDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class PodcastServiceImp implements PodcastService{
     PodcastDao podcastDao;
 
     @Override
-    public void savePodcast(PodcastModel podcast) {
+    public void savePodcast(Podcast podcast) {
         podcastDao.savePodcast(podcast);
     }
 
