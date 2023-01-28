@@ -1,7 +1,7 @@
 package com.am.backend.controllers;
 
 import com.am.backend.models.Podcast;
-import com.am.backend.services.PodcastRedisService;
+import com.am.backend.repository.PodcastDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +16,10 @@ public class Controller {
     private String hostname;
 
     @Autowired
-    Controller(PodcastRedisService podcastRedisService){
+    Controller(PodcastDao podcastRedisService){
         this.podcastRedisService = podcastRedisService;
     }
-    PodcastRedisService podcastRedisService;
+    PodcastDao podcastRedisService;
 
     @GetMapping("/filenames")
     public List<Podcast> listOfFilenames(){

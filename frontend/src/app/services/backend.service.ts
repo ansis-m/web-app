@@ -16,8 +16,12 @@ export class BackendService {
     return this.http.get<Podcast[]>(this.BACKEND_URL  + "/filenames", {observe: 'body', responseType: 'json'});
   }
 
-    addTimeStamp(fileName: string, trackTitle: string, timestamp: number) {
-      return this.http.post<number>(this.BACKEND_URL  + "/timestamp/add/" + fileName + "/" + trackTitle, timestamp, {observe: 'body', responseType: 'json'});
+  addTimeStamp(fileName: string, trackTitle: string, timestamp: number) {
+    return this.http.post<number>(this.BACKEND_URL  + "/timestamp/add/" + fileName + "/" + trackTitle, timestamp, {observe: 'body', responseType: 'json'});
 
-    }
+  }
+
+  removeTimeStamp(fileName: string, title: string) {
+    return this.http.post<number>(this.BACKEND_URL  + "/timestamp/remove/" + fileName + "/" + title, 0, {observe: 'body', responseType: 'json'});
+  }
 }

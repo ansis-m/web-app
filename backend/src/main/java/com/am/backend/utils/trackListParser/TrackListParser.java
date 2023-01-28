@@ -2,7 +2,7 @@ package com.am.backend.utils.trackListParser;
 
 import com.am.backend.models.Podcast;
 import com.am.backend.models.Track;
-import com.am.backend.services.PodcastRedisService;
+import com.am.backend.repository.PodcastDao;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +18,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class TrackListParser {
 
     private static String files;
-    private static PodcastRedisService podcastRedisService;
+    private static PodcastDao podcastRedisService;
     private TrackListParser(
             @Value("${files}") String files,
-            PodcastRedisService podcastRedisService
+            PodcastDao podcastRedisService
     ){
         TrackListParser.files = files;
         TrackListParser.podcastRedisService = podcastRedisService;

@@ -44,15 +44,11 @@ public class PodcastDaoImpl implements PodcastDao{
 
     @Override
     public int addTimeStamp(String fileName, String trackTitle, int timestamp) {
-        System.out.println("Setting timestamp. Filename: " + fileName + " trackTitle: " + trackTitle + " timestamp: " + timestamp);
-
         try {
             ObjectMapper om = new ObjectMapper();
             Podcast podcast = om.convertValue(redisTemplate.opsForHash().get(KEY, fileName), Podcast.class);
-            podcast.getTrackList().forEach(track -> {   System.out.println(track.getTitle());
-                                                        if (track.getTitle().trim().equals(trackTitle.trim())) {
-                                                        System.out.println("Match!!\n\n");
-                                                        track.setTimestamp(timestamp);
+            podcast.getTrackList().forEach(track -> {   if (track.getTitle().trim().equals(trackTitle.trim())) {
+                                                            track.setTimestamp(timestamp);
                                                         }
                                                     });
             redisTemplate.opsForHash().put(KEY, fileName, podcast);
@@ -68,9 +64,10 @@ public class PodcastDaoImpl implements PodcastDao{
         try {
             ObjectMapper om = new ObjectMapper();
             Podcast podcast = om.convertValue(redisTemplate.opsForHash().get(KEY, fileName), Podcast.class);
-            podcast.getTrackList().forEach(track -> {if(track.getTitle().equals(trackTitle))
-                track.setTimestamp(-1);
-            });
+            podcast.getTrackList().forEach(track -> {   if (track.getTitle().trim().equals(trackTitle.trim())) {
+                                                            track.setTimestamp(-1);
+                                                        }
+                                                    });
             redisTemplate.opsForHash().put(KEY, fileName, podcast);
             return 1;
         } catch (Exception e){

@@ -38,11 +38,13 @@ export class QemPlayerComponent implements OnInit{
     //@ts-ignore
     song.timestamp = this.player.nativeElement.currentTime;
     this.backendService.addTimeStamp(this.podcast.fileName, song.title, song.timestamp)
-        .subscribe(response => console.log("Add Timestamp response: " + response));
+        .subscribe();
   }
 
   removeTimestamp(song: Track) {
     song.timestamp = -1;
+    this.backendService.removeTimeStamp(this.podcast.fileName, song.title)
+        .subscribe();
   }
 
   getCurrentTrack(): string {
