@@ -1,6 +1,6 @@
 
 
-export class Song{
+export class Track {
 
   timestamp: number;
   title: string;

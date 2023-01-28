@@ -5,3 +5,12 @@
   width: 90%;
   margin: 0 auto;
 }
+
+.astext {
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  cursor: pointer;
+  color: red;
+}

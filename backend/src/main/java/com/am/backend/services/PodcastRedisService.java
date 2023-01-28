@@ -4,7 +4,7 @@ import com.am.backend.models.Podcast;
 
 import java.util.List;
 
-public interface PodcastService {
+public interface PodcastRedisService {
 
     void savePodcast(Podcast podcast);
     List<Object> getPodcasts();

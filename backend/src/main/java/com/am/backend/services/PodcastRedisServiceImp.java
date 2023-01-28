@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PodcastServiceImp implements PodcastService{
+public class PodcastRedisServiceImp implements PodcastRedisService {
 
 
     @Autowired

@@ -1,7 +1,9 @@
+import {Track} from "./track";
+
 export class Podcast {
   fileName: string;
   showTrackList: boolean;
-  trackList: string[];
+  trackList: Track[];
 
   constructor() {
     this.fileName = "";
